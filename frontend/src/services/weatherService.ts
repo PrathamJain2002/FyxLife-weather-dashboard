@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { City, WeatherData, CitySearchResult, ApiResponse } from '../types/weather';
 
-const API_BASE_URL = '/api';
+const API_BASE_URL = 'https://fyxlife-weather-dashboard-production.up.railway.app/api';
 
 export class WeatherService {
 
