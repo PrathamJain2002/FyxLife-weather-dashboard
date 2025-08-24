@@ -8,7 +8,7 @@ const weatherService = new WeatherService();
 
 interface CitySearchProps {
   onCitySelect: (city: City) => void;
-  onCityAdd: (city: City) => void;
+  onCityAdd: (city: Omit<City, 'id' | 'addedAt'>) => void;
   onClose: () => void;
   existingCities: City[];
 }
