@@ -1,0 +1,21 @@
+{
+  "name": "fyxlife-weather-dashboard",
+  "version": "1.0.0",
+  "description": "A modern weather dashboard with multi-city support, caching, and responsive design",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && npm run build",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "start": "cd backend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["weather", "dashboard", "react", "nodejs", "typescript"],
+  "author": "Your Name",
+  "license": "MIT"
+}
