@@ -3,7 +3,8 @@
   "build": {
     "builder": "NIXPACKS",
     "rootDirectory": "backend",
-    "buildCommand": "npm run build"
+    "buildCommand": "npm run build",
+    "dockerfile": false
   },
   "deploy": {
     "startCommand": "npm start",
