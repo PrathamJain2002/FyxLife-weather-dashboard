@@ -7,6 +7,7 @@ interface SavedCitiesProps {
   selectedCity: City | null;
   onCitySelect: (city: City) => void;
   onCityRemove: (cityId: string) => void;
+  onAddCity: () => void;
 }
 
 export const SavedCities = ({
@@ -14,6 +15,7 @@ export const SavedCities = ({
   selectedCity,
   onCitySelect,
   onCityRemove,
+  onAddCity,
 }: SavedCitiesProps) => {
   if (cities.length === 0) {
     return (
@@ -27,10 +29,9 @@ export const SavedCities = ({
         <p className="text-sm text-gray-600 mb-4">
           Add cities to start tracking weather
         </p>
-        <button className="btn-primary w-full">
-          <Plus className="w-4 h-4 mr-2" />
-          Add City
-        </button>
+                 <button onClick={onAddCity} className="btn-primary w-full">
+           Add City
+         </button>
       </div>
     );
   }
@@ -88,7 +89,7 @@ export const SavedCities = ({
       </div>
 
              <div className="pt-4 border-t border-gray-200">
-         <button className="btn-primary w-full">
+         <button onClick={onAddCity} className="btn-primary w-full">
            Add Another City
          </button>
        </div>

@@ -42,6 +42,10 @@ function App() {
       await queryClient.invalidateQueries({ queryKey: ['savedCities'] })
       console.log('🚀 App: Cache invalidated, cities should update');
       
+      // Automatically select the newly added city
+      setSelectedCity(addedCity)
+      console.log('🚀 App: Newly added city selected:', addedCity);
+      
       setShowSearch(false)
       console.log('🚀 App: Search modal closed');
     } catch (error) {
@@ -103,12 +107,13 @@ function App() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Left Sidebar - Saved Cities */}
           <div className="lg:col-span-1">
-            <SavedCities
-              cities={savedCities}
-              selectedCity={selectedCity}
-              onCitySelect={setSelectedCity}
-              onCityRemove={handleCityRemove}
-            />
+                         <SavedCities
+               cities={savedCities}
+               selectedCity={selectedCity}
+               onCitySelect={setSelectedCity}
+               onCityRemove={handleCityRemove}
+               onAddCity={() => setShowSearch(true)}
+             />
           </div>
 
           {/* Main Content - Weather Dashboard */}
