@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 export interface AppError extends Error {
   statusCode?: number;
   isOperational?: boolean;
+  code?: number | string;
 }
 
 export const errorHandler = (
