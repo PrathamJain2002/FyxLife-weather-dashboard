@@ -1,7 +1,13 @@
 import axios from 'axios';
 import { City, WeatherData, CitySearchResult, ApiResponse } from '../types/weather';
 
-const API_BASE_URL = 'https://fyxlife-weather-dashboard-production.up.railway.app/api';
+// Auto-detect environment and use appropriate API URL
+const API_BASE_URL = (() => {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return 'http://localhost:5000/api'; // Local development
+  }
+  return 'https://fyxlife-weather-dashboard-production.up.railway.app/api'; // Production
+})();
 
 export class WeatherService {
 

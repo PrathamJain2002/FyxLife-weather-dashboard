@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { WeatherDashboard } from './components/WeatherDashboard'
 import { CitySearch } from './components/CitySearch'
@@ -20,6 +20,13 @@ function App() {
     queryFn: weatherService.getSavedCities,
     refetchOnWindowFocus: false,
   })
+
+  // Auto-select first saved city when component mounts
+  useEffect(() => {
+    if (savedCities.length > 0 && !selectedCity) {
+      setSelectedCity(savedCities[0])
+    }
+  }, [savedCities, selectedCity])
 
   console.log('🔄 App: Saved cities data:', savedCities);
   console.log('🔄 App: Cities loading:', citiesLoading);
@@ -86,17 +93,7 @@ function App() {
             </div>
             
             <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setShowSearch(!showSearch)}
-                className="btn-primary flex items-center space-x-2"
-              >
-                <Search className="w-4 h-4" />
-                <span>Add City</span>
-              </button>
-              
-              <button className="btn-secondary">
-                <Settings className="w-4 h-4" />
-              </button>
+              {/* Header buttons removed */}
             </div>
           </div>
         </div>
@@ -120,22 +117,40 @@ function App() {
           <div className="lg:col-span-3">
             {selectedCity ? (
               <WeatherDashboard city={selectedCity} />
-            ) : (
+            ) : savedCities.length === 0 ? (
               <div className="text-center py-20">
                 <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
                   <MapPin className="w-12 h-12 text-gray-400" />
                 </div>
                 <h2 className="text-2xl font-semibold text-gray-600 mb-2">
-                  No City Selected
+                  No Cities Saved
                 </h2>
                 <p className="text-gray-500 mb-6">
-                  Choose a city from your saved list or add a new one to see the weather
+                  Add your first city to start tracking the weather
                 </p>
                 <button
                   onClick={() => setShowSearch(true)}
                   className="btn-primary"
                 >
                   Add Your First City
+                </button>
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <MapPin className="w-12 h-12 text-gray-400" />
+                </div>
+                <h2 className="text-2xl font-semibold text-gray-600 mb-2">
+                  Select a City
+                </h2>
+                <p className="text-gray-500 mb-6">
+                  Choose a city from your saved list to see the weather
+                </p>
+                <button
+                  onClick={() => setShowSearch(true)}
+                  className="btn-primary"
+                >
+                  Add More Cities
                 </button>
               </div>
             )}
