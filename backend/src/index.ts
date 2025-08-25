@@ -24,31 +24,24 @@ app.use(cors({
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
     
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'http://localhost:5173',
-      'https://fyx-life-weather-dashboard-54sa8bnl9-prathams-projects-6111fc68.vercel.app',
-      'https://fyx-life-weather-dashboard-54sa8bnl9-prathams-projects-6111fc68.vercel.app/',
-      'https://fyx-life-weather-dashboard-i3ob47ear-prathams-projects-6111fc68.vercel.app',
-      'https://fyx-life-weather-dashboard-i3ob47ear-prathams-projects-6111fc68.vercel.app/',
-      'https://fyx-life-weather-dashboard.vercel.app',
-      'https://fyx-life-weather-dashboard.vercel.app/'
-    ];
-    
-    // Check if origin is allowed (with or without trailing slash)
-    const normalizedOrigin = origin.endsWith('/') ? origin.slice(0, -1) : origin;
-    const isAllowed = allowedOrigins.some(allowed => {
-      const normalizedAllowed = allowed.endsWith('/') ? allowed.slice(0, -1) : allowed;
-      return normalizedOrigin === normalizedAllowed;
-    });
-    
-    if (isAllowed) {
-      callback(null, true);
-    } else {
-      // Log unexpected origins for debugging
-      console.log('CORS blocked origin:', origin);
-      callback(new Error('Not allowed by CORS'));
+    // Allow localhost for development
+    if (origin.startsWith('http://localhost:')) {
+      return callback(null, true);
     }
+    
+    // Allow any Vercel preview deployment from your project
+    if (origin.includes('fyx-life-weather-dashboard') && origin.includes('vercel.app')) {
+      return callback(null, true);
+    }
+    
+    // Allow your main Vercel domain
+    if (origin === 'https://fyx-life-weather-dashboard.vercel.app') {
+      return callback(null, true);
+    }
+    
+    // Log unexpected origins for debugging
+    console.log('CORS blocked origin:', origin);
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true
 }));
